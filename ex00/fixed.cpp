@@ -4,17 +4,17 @@ const int	Fixed::_frac = 8;
 
 Fixed::Fixed(void): _value(0)
 {
-	std::cout << "Fixed object created with default constructor" << std::endl;
+	std::cout << "Destructor created with default constructor" << std::endl;
 }
 
 Fixed::~Fixed(void)
 {
-	std::cout << "Fixed object destroyed" << std::endl;
+	std::cout << "Destructor called" << std::endl;
 }
 
 Fixed::Fixed(Fixed const & copy)
 {
-	std::cout << "Fixed object copied" << std::endl;
+	std::cout << "Destructor copied" << std::endl;
 	*this = copy;
 }
 
