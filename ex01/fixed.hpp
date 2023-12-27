@@ -5,24 +5,24 @@
 # include <iostream>
 # include <cmath>
 
-class	Fixed
-{
+class Fixed{
 	private:
-		int					_value;
-		static const int	_frac;
+		int fixed_p;
+		static const int frac = 8;
 	public:
-		Fixed(void);
-		Fixed(const int value);
-		Fixed(const float value);
-		~Fixed(void);
-		Fixed(Fixed const &copy);
-		Fixed	&operator=(Fixed const &copy);
-		int		getRawBits(void) const;
-		void	setRawBits(int const raw);
-		float	toFloat(void) const;
-		int		toInt(void) const;
+		Fixed();
+		Fixed(const int x);
+		Fixed(const float x);
+		Fixed(const Fixed &new_fixed);
+		Fixed &operator =(const Fixed &new_fixed);
+		int getRawBits() const;
+		void setRawBits( int const raw );
+		float toFloat()const;
+		int toInt( void ) const;
+		~Fixed();
 };
 
-std::ostream	&operator<<(std::ostream &str, Fixed const &fixed_nbr);
+int	ft_iterative_power(int nb, int power);
+std::ostream& operator<<(std::ostream& COUT, const Fixed &fixed);
 
 #endif

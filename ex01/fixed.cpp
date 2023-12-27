@@ -1,78 +1,61 @@
 #include "fixed.hpp"
 
-static	float ft_pow(float base, int exp)
+Fixed::Fixed()
 {
-	float	result;
+	this->fixed_p = 0;
+	std::cout <<"Default constructor called"<< std::endl;
 
-	if (!exp)
-		return (1);
-	if (exp < 0)
-	{
-		base = 1 / base;
-		exp *= -1;
-	}
-	result = base;
-	while (--exp)
-		result *= base;
-	return (result);
 }
 
-const int	Fixed::_frac = 8;
-
-Fixed::Fixed(void): _value(0)
+Fixed::Fixed(const int x)
 {
-	std::cout << "Destructor created with default constructor" << std::endl;
+	std::cout << "int constructor called " <<std::endl;
+	this->fixed_p = x * ft_iterative_power(2, frac);
+}
+Fixed::Fixed(const float z)
+{
+	std::cout << "Float constructor called " <<std::endl;
+	this->fixed_p = roundf(z * ft_iterative_power(2, frac));
 }
 
-Fixed::Fixed(const int value): _value(value * ft_pow(2, this->_frac))
+Fixed::~Fixed()
 {
-	std::cout << "Destructor created with int constructor" << std::endl;
+	std::cout << "Destructor called" << std::endl;
 }
 
-Fixed::Fixed(const float value): _value(value * ft_pow(2, this->_frac))
+Fixed::Fixed(const Fixed &new_fixed)
 {
-	std::cout << "Destructor created with float constructor" << std::endl;
+	*this = new_fixed;
+	std::cout <<"copy constructor called"<< std::endl;
 }
 
-Fixed::~Fixed(void)
+Fixed &Fixed::operator =(const Fixed &new_fixed)
 {
-	std::cout << "Destructor destroyed" << std::endl;
+	fixed_p = new_fixed.getRawBits();
+	std::cout <<"Copy assignment operator called"<<std::endl;
+	return *this;
+}
+int Fixed::getRawBits() const
+{
+	return fixed_p;
 }
 
-Fixed::Fixed(Fixed const & copy)
+void Fixed::setRawBits( int const raw )
 {
-	std::cout << "Destructor copied" << std::endl;
-	*this = copy;
+	this->fixed_p = raw;
+}
+float Fixed::toFloat()const
+{
+	return (float)this->fixed_p / ft_iterative_power(2, frac);
+};
+
+int Fixed::toInt( void ) const
+{
+	return roundf(this->fixed_p / ft_iterative_power(2, frac));
 }
 
-float	Fixed::toFloat(void) const
+std::ostream& operator<<(std::ostream& COUT, const Fixed &fixed)
 {
-	return (this->_value * ft_pow(2, -this->_frac));
-}
-
-int	Fixed::toInt(void) const
-{
-	return (this->_value * ft_pow(2, -this->_frac));
-}
-
-Fixed	&Fixed::operator=(Fixed const &copy)
-{
-	std::cout << "Assignment operator called" << std::endl;
-	this->_value = copy.getRawBits();
-	return (*this);
-}
-
-int	Fixed::getRawBits(void) const
-{
-	return (this->_value);
-}
-
-void	Fixed::setRawBits(const int raw)
-{
-	this->_value = raw;
-}
-
-std::ostream	&operator<<(std::ostream &str, Fixed const &fixed_nbr)
-{
-	return (str << fixed_nbr.toFloat());
+	COUT << fixed.toFloat();
+	return (COUT);
 }

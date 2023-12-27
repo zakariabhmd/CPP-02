@@ -5,51 +5,46 @@
 # include <iostream>
 # include <cmath>
 
-class	Fixed
+class Fixed
 {
-	private:
-		int					_value;
-		static const int	_frac;
-	public:
-		/* Contstructors & Destructors */
-		Fixed(void);
-		Fixed(const int value);
-		Fixed(const float value);
-		~Fixed(void);
-		Fixed(Fixed const &copy);
+private:
+	int fixedPoint;
+	const static int fractional = 8;
+public:
+	Fixed();
+	Fixed(const Fixed &copy);
+	Fixed &operator=(const Fixed &copyAssignment);
+	~Fixed();
 
-		/* Basic Operators */
-		Fixed	&operator=(Fixed const &copy);
-		Fixed	operator+(Fixed const &copy) const;
-		Fixed	operator-(Fixed const &copy) const;
-		Fixed	operator*(Fixed const &copy) const;
-		Fixed	operator/(Fixed const &copy) const;
-		bool	operator==(Fixed const &copy) const;
-		bool	operator!=(Fixed const &copy) const;
-		bool	operator<=(Fixed const &copy) const;
-		bool	operator>=(Fixed const &copy) const;
-		bool	operator<(Fixed const &copy) const;
-		bool	operator>(Fixed const &copy) const;
+	Fixed(const int integer);
+	Fixed(const float floatNumber);
 
-		/* Other Operators */
-		Fixed	&operator++(void);
-		Fixed	&operator--(void);
-		Fixed	operator++(int value);
-		Fixed	operator--(int value);
+	int getRawBits( void ) const;
+	void setRawBits (int const fixedPoint);
 
-		/* Min and max functions */
-		static const Fixed	&min(Fixed const &copy1, Fixed const &copy2);
-		static const Fixed	&max(Fixed const &copy1, Fixed const &copy2);
+	float toFloat( void ) const;
+	int toInt( void ) const;
+	bool operator>(const Fixed &arg) const;
+	bool operator<(const Fixed &arg) const;
+	bool operator>=(const Fixed &arg) const;
+	bool operator<=(const Fixed &arg) const;
+	bool operator==(const Fixed &arg) const;
+	bool operator!=(const Fixed &arg) const;
+	Fixed operator+(const Fixed &arg) const;
+	Fixed operator-(const Fixed &arg) const;
+	Fixed operator*(const Fixed &arg) const;
+	Fixed operator/(const Fixed &arg) const;
+	Fixed operator++();
+	Fixed operator++(int);
+	Fixed operator--();
+	Fixed operator--(int);
 
-		/* Getters and setters */
-		int		getRawBits(void) const;
-		void	setRawBits(int const raw);
+	static const Fixed &mini(const Fixed &a, const Fixed &b);
+	static  Fixed &mini( Fixed &a,  Fixed &b);
+	static const Fixed &maxim(const Fixed &a, const Fixed &b);
+	static  Fixed &maxim( Fixed &a,  Fixed &b);
 
-		/* Conversion to int and float */
-		float	toFloat(void) const;
-		int		toInt(void) const;
 };
 
-std::ostream	&operator<<(std::ostream &str, Fixed const &fixed_nbr);
-
+std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
 #endif

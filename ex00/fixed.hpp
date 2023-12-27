@@ -4,18 +4,17 @@
 
 # include <iostream>
 
-class	Fixed
-{
+class Fixed{
 	private:
-		int					_value;
-		static const int	_frac;
+		int fixed_p;
+		static const int frac = 8;
 	public:
-		Fixed(void);
-		~Fixed(void);
-		Fixed(Fixed const &copy);
-		Fixed	&operator=(Fixed const &copy);
-		int		getRawBits(void) const;
-		void	setRawBits(int const raw);
+		Fixed();
+		Fixed(const Fixed &new_fixed);
+		Fixed &operator =(const Fixed &new_fixed);
+		int getRawBits() const;
+		void setRawBits( int const raw );
+		~Fixed();
 };
 
 #endif
